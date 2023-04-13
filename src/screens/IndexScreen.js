@@ -1,14 +1,23 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    FlatList, 
+    Button ,
+    TouchableOpacity
+} from 'react-native';
 import { Context } from '../context/BlogContext';
+import { Feather } from '@expo/vector-icons';
 
 
-const IndexScreen = () => {
-    const { state, addBlogPost } = useContext(Context);
+const IndexScreen = ({ navigation }) => {
+    const { state, addBlogPost, deleteBlogPost } = useContext(Context);
+    
     
     return (
         <View>
-            <Text>Index</Text>
+            
             <Button 
                 title="Add Post"
                 onPress={addBlogPost}
@@ -18,7 +27,18 @@ const IndexScreen = () => {
                 keyExtractor={(blogPost) => blogPost.title}
                 renderItem={({ item }) => {
                     return (
-                        <Text>{item.title}</Text>
+                        <TouchableOpacity onPress={() => {
+                            navigation.navigate('Show', { id: item.id })
+                        }}>
+                            <View style={styles.rowStyle}>
+                                <Text style={styles.titleStyle}>
+                                    {item.title} - {item.id}
+                                </Text>
+                                <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                                    <Feather name='trash' style={styles.iconStyle} />
+                                </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
                     );
                 }}
             />
@@ -27,7 +47,20 @@ const IndexScreen = () => {
 };
 
 const styles = StyleSheet.create({
-
+    rowStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 15,
+        borderTopWidth: 1,
+        borderColor: 'grey',
+        paddingHorizontal: 10
+    },
+    titleStyle: {
+        fontSize: 18
+    },
+    iconStyle: {
+        fontSize: 25
+    }
 });
 
 export default IndexScreen;
