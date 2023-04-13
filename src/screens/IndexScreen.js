@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Context } from '../context/BlogContext';
 import { Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 
 const IndexScreen = ({ navigation }) => {
@@ -45,6 +46,16 @@ const IndexScreen = ({ navigation }) => {
         </View>
     );
 };
+
+IndexScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+                <Ionicons name='add-circle-sharp' size={30} style={{ marginRight: 10 }}/>
+            </TouchableOpacity>
+        )
+    };
+}
 
 const styles = StyleSheet.create({
     rowStyle: {
