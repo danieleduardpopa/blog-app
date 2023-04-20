@@ -13,16 +13,11 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 const IndexScreen = ({ navigation }) => {
-    const { state, addBlogPost, deleteBlogPost } = useContext(Context);
+    const { state, deleteBlogPost } = useContext(Context);
     
     
     return (
         <View>
-            
-            <Button 
-                title="Add Post"
-                onPress={addBlogPost}
-            />
             <FlatList 
                 data={state}
                 keyExtractor={(blogPost) => blogPost.title}
@@ -33,7 +28,7 @@ const IndexScreen = ({ navigation }) => {
                         }}>
                             <View style={styles.rowStyle}>
                                 <Text style={styles.titleStyle}>
-                                    {item.title} - {item.id}
+                                    {item.title}
                                 </Text>
                                 <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
                                     <Feather name='trash' style={styles.iconStyle} />
